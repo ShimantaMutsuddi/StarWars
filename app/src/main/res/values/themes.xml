@@ -10,7 +10,7 @@
     <style name="Theme.StarWars" parent="Base.Theme.StarWars" />-->
 
     !-- Base application theme. -->
-    <style name="Base.Theme.StarWars" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.StarWars" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/main</item>

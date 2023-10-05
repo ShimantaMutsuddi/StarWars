@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.mutsuddi_s.starwars"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.mutsuddi_s.starwars"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 

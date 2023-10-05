@@ -1,6 +1,6 @@
 package com.mutsuddi_s.starwars.data.model.people
 
-data class Result(
+data class Character(
     val birth_year: String,
     val created: String,
     val edited: String,
