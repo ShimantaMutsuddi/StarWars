@@ -1,6 +1,7 @@
 package com.mutsuddi_s.starwars.ui.characters
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -15,9 +16,7 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(private val charactersRepository: StarWarsRepository) :
     ViewModel() {
 
-   /* fun getCharacters(searchString: String): Flow<PagingData<Character>> {
-        return charactersRepository.getCharacters(searchString).cachedIn(viewModelScope)
-    }*/
+
 
     fun getCharacters(searchString: String): LiveData<PagingData<Character>> {
         return charactersRepository.getCharacters(searchString).cachedIn(viewModelScope)

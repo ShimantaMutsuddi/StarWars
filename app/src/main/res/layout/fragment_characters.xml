@@ -16,7 +16,20 @@ tools:context=".ui.characters.CharactersFragment">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-<com.google.android.material.textfield.TextInputLayout
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:iconifiedByDefault="false"
+        android:padding="4dp"
+        android:background="@drawable/searchbar_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:queryHint="Search Programming language" />
+
+<!--<com.google.android.material.textfield.TextInputLayout
     android:id="@+id/searchView"
     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
     android:layout_width="0dp"
@@ -42,7 +55,7 @@ tools:context=".ui.characters.CharactersFragment">
         android:inputType="text"
         android:textColorHint="@color/light_gray" />
 
-</com.google.android.material.textfield.TextInputLayout>
+</com.google.android.material.textfield.TextInputLayout>-->
 
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/charactersRecyclerview"
