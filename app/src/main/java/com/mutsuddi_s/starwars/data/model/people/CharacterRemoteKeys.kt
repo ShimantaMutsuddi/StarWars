@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "CharacterRemoteKeys")
 data class CharacterRemoteKeys(
     @PrimaryKey
-    val id: Int,
+    val name: String,
     val prevPage: Int?,
     val nextPage: Int?
 

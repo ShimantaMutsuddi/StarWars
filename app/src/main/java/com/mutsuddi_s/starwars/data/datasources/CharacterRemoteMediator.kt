@@ -67,7 +67,7 @@ class CharacterRemoteMediator(
             }
             // Fetch characters from the remote API.
             val response = characterService.getCharacters(currentPage)
-            val data = response.results ?: emptyList()
+            val data = response.body()!!.results ?: emptyList()
                 val endOfPaginationReached=data.isEmpty()
 
             val prevPage = if (currentPage == 1) null else currentPage - 1
@@ -82,16 +82,16 @@ class CharacterRemoteMediator(
                 }
                 characterDao.insertAll(data)
 
-                val keys = response!!.results.map { character ->
+                val keys = response.body()?.results?.map { character ->
                     CharacterRemoteKeys(
-                        id = character.id,
+                        name = character.name,
                         prevPage = prevPage,
                         nextPage = nextPage
                     )
 
 
                 }
-                characterRemoteKeysDao.insertAllRemoteKeys(keys)
+                characterRemoteKeysDao.insertAllRemoteKeys(keys!!)
 
 
             }
@@ -116,11 +116,12 @@ class CharacterRemoteMediator(
         state: PagingState<Int, Character>
     ): CharacterRemoteKeys? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { id ->
-                characterRemoteKeysDao.getRemoteKeys(id = id)
+            state.closestItemToPosition(position)?.name?.let { name ->
+                characterRemoteKeysDao.getRemoteKeys(name)
             }
         }
     }
+
 
     /**
      * Get the remote key for the first item in the PagingState.
@@ -134,7 +135,7 @@ class CharacterRemoteMediator(
     ): CharacterRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { character ->
-                characterRemoteKeysDao.getRemoteKeys(id = character.id)
+                characterRemoteKeysDao.getRemoteKeys(name = character.name)
             }
     }
 
@@ -150,7 +151,7 @@ class CharacterRemoteMediator(
     ): CharacterRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { character ->
-                characterRemoteKeysDao.getRemoteKeys(id = character.id)
+                characterRemoteKeysDao.getRemoteKeys(name = character.name)
             }
     }
 }

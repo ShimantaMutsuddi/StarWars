@@ -6,6 +6,7 @@ import com.mutsuddi_s.starwars.data.remote.ApiInterface
 import com.mutsuddi_s.starwars.utils.Constants.FIRST_PAGE_INDEX
 import com.mutsuddi_s.starwars.data.model.people.Character
 
+/*
 class CharactersPagingSource(private val apiService: ApiInterface, private val searchString: String) :
     PagingSource<Int,Character >() {
 
@@ -30,4 +31,4 @@ class CharactersPagingSource(private val apiService: ApiInterface, private val s
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
         return state.anchorPosition
     }
-}
+}*/

@@ -5,11 +5,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.mutsuddi_s.starwars.data.datasources.CharacterRemoteMediator
-import com.mutsuddi_s.starwars.data.datasources.CharactersPagingSource
 import com.mutsuddi_s.starwars.data.local.AppDatabase
 import com.mutsuddi_s.starwars.data.remote.ApiInterface
-import com.mutsuddi_s.starwars.data.remote.SafeApiCall
-import com.mutsuddi_s.starwars.utils.Constants.NETWORK_PAGE_SIZE
 import javax.inject.Inject
 @ExperimentalPagingApi
 class StarWarsRepository @Inject constructor(
@@ -34,7 +31,7 @@ class StarWarsRepository @Inject constructor(
      */
 
     fun getCharacters(searchString: String) = Pager(
-        config = PagingConfig(pageSize = 20, maxSize = 100),
+        config = PagingConfig(pageSize = 10, maxSize = 100),
         remoteMediator = CharacterRemoteMediator(apiService, appDatabase),
         pagingSourceFactory = { appDatabase.characterDao().getCharacterByName(searchString) }
 
