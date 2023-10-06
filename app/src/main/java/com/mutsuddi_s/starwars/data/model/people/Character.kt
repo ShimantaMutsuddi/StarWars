@@ -1,11 +1,16 @@
 package com.mutsuddi_s.starwars.data.model.people
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "characters")
 data class Character(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val birth_year: String,
-    val created: String,
-    val edited: String,
+    //val created: String,
+   // val edited: String,
     val eye_color: String,
-    val films: List<String>,
     val gender: String,
     val hair_color: String,
     val height: String,
@@ -13,8 +18,7 @@ data class Character(
     val mass: String,
     val name: String,
     val skin_color: String,
-    val species: List<String>,
-    val starships: List<String>,
-    val url: String,
-    val vehicles: List<String>
+//    val starships: List<String>,
+   // val url: String,
+   // val vehicles: List<String>
 )

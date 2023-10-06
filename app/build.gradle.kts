@@ -1,7 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    //id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
@@ -78,22 +79,23 @@ dependencies {
     var room_version = "2.5.2"
     implementation ("androidx.room:room-runtime:2.5.2")
     implementation ("androidx.room:room-ktx:$room_version")
-    kapt ("androidx.room:room-compiler:$room_version")
+    ksp ("androidx.room:room-compiler:2.5.2")
     implementation ("androidx.room:room-paging:$room_version")
 
     //dagger-hilt
     implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
+    ksp("com.google.dagger:hilt-android-compiler:2.48")
     //kapt ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
 
 
     //Glide Library
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    kapt("com.github.bumptech.glide:compiler:4.14.2")
+    ksp("com.github.bumptech.glide:compiler:4.14.2")
     //paging
     implementation ("androidx.paging:paging-runtime:3.2.1")
 }
 
+/*
 kapt {
     correctErrorTypes = true
-}
+}*/

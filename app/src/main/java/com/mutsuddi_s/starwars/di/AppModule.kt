@@ -1,11 +1,17 @@
 package com.mutsuddi_s.starwars.di
 
+import android.content.Context
+import androidx.paging.ExperimentalPagingApi
+import androidx.room.Room
+import com.mutsuddi_s.starwars.data.local.AppDatabase
 import com.mutsuddi_s.starwars.data.remote.ApiInterface
 import com.mutsuddi_s.starwars.data.repository.StarWarsRepository
 import com.mutsuddi_s.starwars.utils.Constants.BASE_URL
+import com.mutsuddi_s.starwars.utils.Constants.DATABASE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -71,9 +77,17 @@ object AppModule {
         return retrofit.create(ApiInterface::class.java)
     }
 
+    /*@OptIn(ExperimentalPagingApi::class)
     @Singleton
     @Provides
     fun providesCharactersRepository(apiService: ApiInterface): StarWarsRepository {
-        return StarWarsRepository(apiService)
+        return StarWarsRepository(apiService, appDatabase = )
+    }*/
+
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context) : AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE)
+            .build()
     }
 }
