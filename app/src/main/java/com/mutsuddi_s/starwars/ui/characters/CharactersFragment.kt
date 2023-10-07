@@ -82,8 +82,9 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
                 footer = LoaderAdapter(),
             )
 
+
         }
-       /* charactersAdapter.addLoadStateListener { loadState ->
+        /*charactersAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
                 if (charactersAdapter.snapshot().isEmpty()) {
                     binding.charactersProgressBar.isVisible = true

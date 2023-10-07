@@ -6,13 +6,16 @@ import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.mutsuddi_s.starwars.data.datasources.CharacterRemoteMediator
 import com.mutsuddi_s.starwars.data.local.AppDatabase
+import com.mutsuddi_s.starwars.data.model.people.FilmResponse
 import com.mutsuddi_s.starwars.data.remote.ApiInterface
+import com.mutsuddi_s.starwars.data.remote.SafeApiCall
+import com.mutsuddi_s.starwars.utils.Resource
 import javax.inject.Inject
 @ExperimentalPagingApi
 class StarWarsRepository @Inject constructor(
     private val apiService: ApiInterface,
     private val appDatabase: AppDatabase
-)  {
+):SafeApiCall()  {
 
    /* fun getCharacters(searchString: String) = Pager(
         config = PagingConfig(
@@ -36,4 +39,25 @@ class StarWarsRepository @Inject constructor(
         pagingSourceFactory = { appDatabase.characterDao().getCharacterByName(searchString) }
 
     ).liveData
+
+
+     suspend fun getHomeWorld(url: String) = safeApiCall {
+        apiService.getHomeWorld(url)
+    }
+
+    suspend fun getFilms(urls: List<String>): Resource<List<FilmResponse>> {
+
+        try {
+            val films = mutableListOf<FilmResponse>()
+
+            for (url in urls) {
+                val film = apiService.getFilm(url)
+                films.add(film)
+            }
+
+            return Resource.Success(films)
+        } catch (e: Exception) {
+            return Resource.Error(e.localizedMessage)
+        }
+    }
 }
