@@ -8,15 +8,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mutsuddi_s.starwars.data.model.people.Character
 import com.mutsuddi_s.starwars.databinding.CharactersRowBinding
 
-class CharactersAdapter() :
+class CharactersAdapter(private val listener: OnItemClickListener) :
     PagingDataAdapter<Character, CharactersAdapter.MyViewHolder>(CHARACTER_COMPARATOR) {
+
+    interface OnItemClickListener {
+        fun onItemClick(character: Character)
+    }
 
     inner class MyViewHolder(private val binding: CharactersRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(character: Character?) {
             binding.nameTextView.text = character?.name
             binding.dobTextView.text = character?.birth_year
+
+            binding.root.setOnClickListener {
+                // Invoke the callback method with the clicked item
+                listener.onItemClick(character!!)
+            }
+
+
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -33,9 +45,6 @@ class CharactersAdapter() :
         val character = getItem(position)
         holder.bind(character)
 
-       /* holder.itemView.setOnClickListener {
-            onClickListener.onClick(character!!)
-        }*/
     }
 
     companion object {
@@ -50,7 +59,5 @@ class CharactersAdapter() :
         }
     }
 
-    class OnClickListener(val clickListener: (character: Character) -> Unit) {
-        fun onClick(character: Character) = clickListener(character)
-    }
+
 }

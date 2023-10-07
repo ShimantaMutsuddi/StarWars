@@ -8,11 +8,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mutsuddi_s.starwars.data.adapters.CharactersAdapter
 import com.mutsuddi_s.starwars.data.adapters.LoaderAdapter
+import com.mutsuddi_s.starwars.data.model.people.Character
 import com.mutsuddi_s.starwars.databinding.FragmentCharactersBinding
 import com.mutsuddi_s.starwars.utils.hideKeyboard
 import com.mutsuddi_s.starwars.utils.onQueryTextChanged
@@ -22,7 +24,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
 @AndroidEntryPoint
-class CharactersFragment : Fragment() {
+class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
 
     private var _binding: FragmentCharactersBinding? = null
     private val binding get() = _binding!!
@@ -41,7 +43,7 @@ class CharactersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        charactersAdapter = CharactersAdapter()
+        charactersAdapter = CharactersAdapter(this)
         setupRecyclerView()
         setupObservers("")
         binding.searchView.onQueryTextChanged {
@@ -79,8 +81,9 @@ class CharactersFragment : Fragment() {
                 header = LoaderAdapter(),
                 footer = LoaderAdapter(),
             )
+
         }
-        charactersAdapter.addLoadStateListener { loadState ->
+       /* charactersAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
                 if (charactersAdapter.snapshot().isEmpty()) {
                     binding.charactersProgressBar.isVisible = true
@@ -104,9 +107,14 @@ class CharactersFragment : Fragment() {
                     }
                 }
             }
-        }
+        }*/
 
 
+    }
+
+    override fun onItemClick(character: Character) {
+        val action=CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailsFragment(character)
+        Navigation.findNavController(binding.root).navigate(action)
     }
 
 
