@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mutsuddi_s.starwars.data.adapters.CharactersAdapter
 import com.mutsuddi_s.starwars.data.adapters.LoaderAdapter
 import com.mutsuddi_s.starwars.databinding.FragmentCharactersBinding
+import com.mutsuddi_s.starwars.utils.hideKeyboard
 import com.mutsuddi_s.starwars.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,6 +46,8 @@ class CharactersFragment : Fragment() {
         setupObservers("")
         binding.searchView.onQueryTextChanged {
             setupObservers(it)
+            binding.charactersProgressBar.isVisible = true
+            hideKeyboard()
         }
 
 
