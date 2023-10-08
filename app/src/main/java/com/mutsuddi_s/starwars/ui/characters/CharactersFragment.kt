@@ -66,6 +66,7 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
         lifecycleScope.launch {
             viewModel.getCharacters(searchString).observe(viewLifecycleOwner) {
                 charactersAdapter.submitData(lifecycle, it)
+                it?.let { binding.charactersProgressBar.isVisible=false }
             }
         }
     }
@@ -74,7 +75,6 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
 
 
         binding.charactersRecyclerview.apply {
-            layoutManager=LinearLayoutManager(requireContext())
             adapter = charactersAdapter
             setHasFixedSize(true)
             adapter=charactersAdapter.withLoadStateHeaderAndFooter(

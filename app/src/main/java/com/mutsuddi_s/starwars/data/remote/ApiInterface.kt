@@ -3,6 +3,7 @@ package com.mutsuddi_s.starwars.data.remote
 import com.mutsuddi_s.starwars.data.model.people.CharacterList
 import com.mutsuddi_s.starwars.data.model.people.FilmResponse
 import com.mutsuddi_s.starwars.data.model.people.HomeWorldResponse
+import com.mutsuddi_s.starwars.data.model.people.SpeciesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,6 +19,9 @@ interface ApiInterface {
 
     @GET
     suspend fun getFilm(@Url url: String): FilmResponse
+
+    @GET
+    suspend fun getSpecies(@Url url: String): SpeciesResponse
 
 
 }

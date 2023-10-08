@@ -19,6 +19,7 @@ data class Character(
     val mass: String,
     val skin_color: String,
     val starships: List<String>,
+    val species: List<String>,
     val films: List<String>,
     val url: String,
     val vehicles: List<String>

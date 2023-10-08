@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/charactersFragment"
         android:name="com.mutsuddi_s.starwars.ui.characters.CharactersFragment"
-        android:label="fragment_characters"
+        android:label="Characters"
         tools:layout="@layout/fragment_characters" >
         <action
             android:id="@+id/action_charactersFragment_to_characterDetailsFragment"
@@ -17,10 +17,20 @@
     <fragment
         android:id="@+id/characterDetailsFragment"
         android:name="com.mutsuddi_s.starwars.ui.characterdetails.CharacterDetailsFragment"
-        android:label="fragment_character_details"
+        android:label="Character Details"
         tools:layout="@layout/fragment_character_details" >
         <argument
             android:name="character"
             app:argType="com.mutsuddi_s.starwars.data.model.people.Character" />
     </fragment>
+    <fragment
+        android:id="@+id/starShipsFragment"
+        android:name="com.mutsuddi_s.starwars.StarShipsFragment"
+        android:label="Starships"
+        tools:layout="@layout/fragment_star_ships" />
+    <fragment
+        android:id="@+id/planetsFragment"
+        android:name="com.mutsuddi_s.starwars.PlanetsFragment"
+        android:label="Planets"
+        tools:layout="@layout/fragment_planets" />
 </navigation>

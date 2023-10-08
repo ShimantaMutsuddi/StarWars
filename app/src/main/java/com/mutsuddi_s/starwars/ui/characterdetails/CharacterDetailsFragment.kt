@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.navigation.fragment.navArgs
 import androidx.paging.ExperimentalPagingApi
 import com.mutsuddi_s.starwars.data.adapters.FilmsAdapter
+import com.mutsuddi_s.starwars.data.adapters.SpeciesAdapter
 
 import com.mutsuddi_s.starwars.data.model.people.Character
 import com.mutsuddi_s.starwars.databinding.FragmentCharacterDetailsBinding
@@ -31,6 +32,10 @@ class CharacterDetailsFragment : Fragment() {
     private val filmsAdapter: FilmsAdapter by lazy {
         FilmsAdapter()
     }
+    private val speciesAdapter: SpeciesAdapter by lazy {
+        SpeciesAdapter()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,6 +65,11 @@ class CharacterDetailsFragment : Fragment() {
         character.films?.let {
             binding.filmsLayout.isVisible=true
             viewModel.fetchFilms(it)
+        }
+
+        character.species?.let {
+            binding.speciesLayout.isVisible=true
+            viewModel.fetchSpecies(it)
         }
 
 
@@ -96,6 +106,24 @@ class CharacterDetailsFragment : Fragment() {
                 }
                 is Resource.Loading -> {
                     binding.filmProgressBar.isVisible = true
+                }
+                else -> Unit
+            }
+        }
+        viewModel.species.observe(viewLifecycleOwner){ event ->
+            when (event) {
+                is Resource.Success -> {
+                    binding.SpeciesProgressBar.isVisible = false
+                    speciesAdapter.submitList(event.data)
+                    binding.recyclerViewSpecies.adapter = speciesAdapter
+                }
+                is Resource.Error -> {
+                    binding.SpeciesProgressBar.isVisible = false
+                    binding.textViewSpeciesError.isVisible = true
+                    binding.textViewSpeciesError.text = event.errorMessage
+                }
+                is Resource.Loading -> {
+                    binding.SpeciesProgressBar.isVisible = true
                 }
                 else -> Unit
             }

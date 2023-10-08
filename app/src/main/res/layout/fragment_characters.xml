@@ -23,6 +23,8 @@ tools:context=".ui.characters.CharactersFragment">
         android:layout_margin="8dp"
         android:iconifiedByDefault="false"
         android:padding="4dp"
+        app:searchIcon="@drawable/ic_search"
+
         android:background="@drawable/searchbar_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +78,7 @@ tools:context=".ui.characters.CharactersFragment">
     style="?android:attr/progressBarStyle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:indeterminateTint="@color/yellow"
+    android:indeterminateTint="@color/white"
     android:indeterminateTintMode="src_in"
     app:layout_constraintBottom_toBottomOf="@+id/charactersRecyclerview"
     app:layout_constraintEnd_toEndOf="@+id/charactersRecyclerview"

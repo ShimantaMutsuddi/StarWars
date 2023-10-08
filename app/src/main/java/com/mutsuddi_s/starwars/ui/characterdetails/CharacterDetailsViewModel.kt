@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import com.mutsuddi_s.starwars.data.model.people.FilmResponse
 import com.mutsuddi_s.starwars.data.model.people.HomeWorldResponse
+import com.mutsuddi_s.starwars.data.model.people.SpeciesResponse
 import com.mutsuddi_s.starwars.data.repository.StarWarsRepository
 import com.mutsuddi_s.starwars.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,9 @@ class CharacterDetailsViewModel @OptIn(ExperimentalPagingApi::class)
     private val _films = MutableLiveData<Resource<List<FilmResponse>>>()
     val films: LiveData<Resource<List<FilmResponse>>> = _films
 
+    private val _species = MutableLiveData<Resource<List<SpeciesResponse>>>()
+    val species: LiveData<Resource<List<SpeciesResponse>>> = _species
+
     fun fetchHomeWorld(url: String) {
         viewModelScope.launch {
             _homeWorldLiveData.value = charactersRepository.getHomeWorld(url)
@@ -36,6 +40,15 @@ class CharacterDetailsViewModel @OptIn(ExperimentalPagingApi::class)
 
             val resultList = charactersRepository.getFilms(urls)
             _films.value = resultList
+
+        }
+    }
+
+    fun fetchSpecies(urls: List<String>) {
+        viewModelScope.launch {
+
+            val resultList = charactersRepository.getSpecies(urls)
+            _species.value = resultList
 
         }
     }

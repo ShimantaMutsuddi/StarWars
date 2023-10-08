@@ -7,6 +7,7 @@ import androidx.paging.liveData
 import com.mutsuddi_s.starwars.data.datasources.CharacterRemoteMediator
 import com.mutsuddi_s.starwars.data.local.AppDatabase
 import com.mutsuddi_s.starwars.data.model.people.FilmResponse
+import com.mutsuddi_s.starwars.data.model.people.SpeciesResponse
 import com.mutsuddi_s.starwars.data.remote.ApiInterface
 import com.mutsuddi_s.starwars.data.remote.SafeApiCall
 import com.mutsuddi_s.starwars.utils.Resource
@@ -56,6 +57,21 @@ class StarWarsRepository @Inject constructor(
             }
 
             return Resource.Success(films)
+        } catch (e: Exception) {
+            return Resource.Error(e.localizedMessage)
+        }
+    }
+    suspend fun getSpecies(urls: List<String>): Resource<List<SpeciesResponse>> {
+
+        try {
+            val speciesList = mutableListOf<SpeciesResponse>()
+
+            for (url in urls) {
+                val species = apiService.getSpecies(url)
+                speciesList.add(species)
+            }
+
+            return Resource.Success(speciesList)
         } catch (e: Exception) {
             return Resource.Error(e.localizedMessage)
         }
