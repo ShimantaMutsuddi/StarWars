@@ -19,7 +19,7 @@ class LoaderAdapter : LoadStateAdapter<LoaderAdapter.LoaderViewHolder>() {
             binding.apply {
 
                  if(loadState is LoadState.Error){
-                     tvError.text=loadState.error.localizedMessage
+                     tvError.text=loadState.error.message
                  }
                 loader.isVisible = loadState is LoadState.Loading
                 tvError.isVisible = loadState is LoadState.Error

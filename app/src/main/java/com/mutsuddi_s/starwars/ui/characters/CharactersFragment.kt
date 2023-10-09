@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.mutsuddi_s.starwars.data.adapters.CharactersAdapter
 import com.mutsuddi_s.starwars.data.adapters.LoaderAdapter
 import com.mutsuddi_s.starwars.data.model.people.Character
@@ -48,7 +49,7 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
         setupObservers("")
         binding.searchView.onQueryTextChanged {
             setupObservers(it)
-            binding.charactersProgressBar.isVisible = true
+           // binding.charactersProgressBar.isVisible = true
             hideKeyboard()
         }
 
@@ -86,15 +87,13 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
         }
 
 
-        /*charactersAdapter.addLoadStateListener { loadState ->
+
+        charactersAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
-                if (charactersAdapter.snapshot().isEmpty()) {
-                    binding.charactersProgressBar.isVisible = true
-                }
-                binding.textViewError.isVisible = false
+                binding.charactersProgressBar.isVisible = charactersAdapter.snapshot().isEmpty()
+                //binding.textViewError.isVisible = false
 
             } else {
-                binding.charactersProgressBar.isVisible = false
 
                 val error = when {
                     loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
@@ -105,12 +104,16 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
                 }
                 error?.let {
                     if (charactersAdapter.snapshot().isEmpty()) {
-                        binding.textViewError.isVisible = true
-                        binding.textViewError.text = it.error.localizedMessage
+                     //   binding.textViewError.isVisible = true
+                      //  binding.textViewError.text = it.error.message
+                        binding.charactersProgressBar.isVisible=false
+                        val snack = Snackbar.make(binding.root, it.error.message.toString(),Snackbar.LENGTH_LONG)
+                        snack.show()
+
                     }
                 }
             }
-        }*/
+        }
 
 
     }
