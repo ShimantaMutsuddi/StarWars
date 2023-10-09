@@ -66,7 +66,7 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
         lifecycleScope.launch {
             viewModel.getCharacters(searchString).observe(viewLifecycleOwner) {
                 charactersAdapter.submitData(lifecycle, it)
-                it?.let { binding.charactersProgressBar.isVisible=false }
+                //it?.let { binding.charactersProgressBar.isVisible=false }
             }
         }
     }
@@ -84,6 +84,8 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
 
 
         }
+
+
         /*charactersAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
                 if (charactersAdapter.snapshot().isEmpty()) {

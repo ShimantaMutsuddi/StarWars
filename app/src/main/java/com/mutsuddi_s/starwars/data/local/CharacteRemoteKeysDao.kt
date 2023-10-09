@@ -7,14 +7,14 @@ import androidx.room.Query
 import com.mutsuddi_s.starwars.data.model.people.CharacterRemoteKeys
 
 @Dao
-interface RemoteKeysDao {
-    @Query("SELECT * FROM CharacterRemoteKeys WHERE name=:name")
+interface CharacteRemoteKeysDao {
+    @Query("SELECT * FROM character_remote_keys WHERE name=:name")
     suspend fun getRemoteKeys(name: String): CharacterRemoteKeys
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllRemoteKeys(characters: List<CharacterRemoteKeys>)
 
 
-    @Query("DELETE FROM CharacterRemoteKeys")
+    @Query("DELETE FROM character_remote_keys")
     suspend fun deleteAllCharacterKeys()
 }

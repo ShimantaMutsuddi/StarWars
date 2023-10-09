@@ -1,34 +1,25 @@
 package com.mutsuddi_s.starwars.data.datasources
 
-
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.mutsuddi_s.starwars.data.local.AppDatabase
+import com.mutsuddi_s.starwars.data.model.planets.PlanetRemoteKeys
+import com.mutsuddi_s.starwars.data.model.planets.Planets
+import com.mutsuddi_s.starwars.data.model.starships.Starships
+import com.mutsuddi_s.starwars.data.model.starships.StarshipsRemoteKeys
 import com.mutsuddi_s.starwars.data.remote.ApiInterface
-import com.mutsuddi_s.starwars.data.model.people.Character
-import com.mutsuddi_s.starwars.data.model.people.CharacterRemoteKeys
-import retrofit2.HttpException
-import java.io.IOException
-
-/**
- * RemoteMediator class responsible for loading data from a remote data source
- * and saving it to a local Room database while providing paging functionality.
- *
- * @param characterService An instance of the remote API service.
- * @param appDatabase An instance of the local Room database.
- */
 @OptIn(ExperimentalPagingApi::class)
-class CharacterRemoteMediator(
-    private val characterService: ApiInterface,
+class StarshipRemoteMediator(
+    private val apiInterface: ApiInterface,
     private val appDatabase: AppDatabase
-) : RemoteMediator<Int, Character>() {
+) : RemoteMediator<Int, Starships>() {
 
     // Access the Character DAO and CharacterRemoteKeys DAO from the Room database.
-    private val characterDao = appDatabase.characterDao()
-    private val characterRemoteKeysDao = appDatabase.remoteKeysDao()
+    private val starshipsDao = appDatabase.starshipsDao()
+    private val starshipsRemoteKeysDao = appDatabase.starshipsRemoteKeysDao()
 
     /**
      * Loads data from the remote API based on the load type (refresh, prepend, or append).
@@ -39,7 +30,7 @@ class CharacterRemoteMediator(
      */
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Character>
+        state: PagingState<Int, Starships>
     ): MediatorResult {
 
 
@@ -69,9 +60,9 @@ class CharacterRemoteMediator(
                 }
             }
             // Fetch characters from the remote API.
-            val response = characterService.getCharacters(currentPage)
+            val response = apiInterface.getStarships(currentPage)
             val data = response.body()!!.results ?: emptyList()
-                val endOfPaginationReached=data.isEmpty()
+            val endOfPaginationReached=data.isEmpty()
 
             val prevPage = if (currentPage == 1) null else currentPage - 1
             val nextPage = if (endOfPaginationReached) null else currentPage + 1
@@ -80,32 +71,29 @@ class CharacterRemoteMediator(
             appDatabase.withTransaction {
 
                 if (loadType == LoadType.REFRESH) {
-                    characterDao.deleteAllCharacter()
-                    characterRemoteKeysDao.deleteAllCharacterKeys()
+                    starshipsDao.deleteAllPlanet()
+                    starshipsRemoteKeysDao.deleteAllStarshipKeys()
                 }
-                characterDao.insertAll(data)
+                starshipsDao.insertAll(data)
 
-                val keys = response.body()?.results?.map { character ->
-                    CharacterRemoteKeys(
-                        name = character.name,
+                val keys = response.body()?.results?.map { planet ->
+                    StarshipsRemoteKeys(
+                        name = planet.name,
                         prevPage = prevPage,
                         nextPage = nextPage
                     )
 
 
                 }
-                characterRemoteKeysDao.insertAllRemoteKeys(keys!!)
+                starshipsRemoteKeysDao.insertAllRemoteKeys(keys!!)
 
 
             }
             MediatorResult.Success(endOfPaginationReached)
 
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             MediatorResult.Error(e)
 
-        } catch (e: HttpException) {
-            // HttpException for any non-2xx HTTP status codes.
-            return MediatorResult.Error(e)
         }
 
 
@@ -115,15 +103,15 @@ class CharacterRemoteMediator(
      * Get the remote key closest to the current position in the PagingState.
      *
      * @param state The current paging state.
-     * @return The [CharacterRemoteKeys] associated with the closest item to the current position.
+     * @return The [PlanetRemoteKeys] associated with the closest item to the current position.
      */
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
-        state: PagingState<Int, Character>
-    ): CharacterRemoteKeys? {
+        state: PagingState<Int, Starships>
+    ): StarshipsRemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.name?.let { name ->
-                characterRemoteKeysDao.getRemoteKeys(name)
+                starshipsRemoteKeysDao.getRemoteKeys(name)
             }
         }
     }
@@ -133,15 +121,15 @@ class CharacterRemoteMediator(
      * Get the remote key for the first item in the PagingState.
      *
      * @param state The current paging state.
-     * @return The [CharacterRemoteKeys] associated with the first item in the list.
+     * @return The [PlanetRemoteKeys] associated with the first item in the list.
      */
 
     private suspend fun getRemoteKeyForFirstItem(
-        state: PagingState<Int, Character>
-    ): CharacterRemoteKeys? {
+        state: PagingState<Int, Starships>
+    ): StarshipsRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { character ->
-                characterRemoteKeysDao.getRemoteKeys(name = character.name)
+            ?.let { planet ->
+                starshipsRemoteKeysDao.getRemoteKeys(name = planet.name)
             }
     }
 
@@ -149,15 +137,15 @@ class CharacterRemoteMediator(
      * Get the remote key for the last item in the PagingState.
      *
      * @param state The current paging state.
-     * @return The [CharacterRemoteKeys] associated with the last item in the list.
+     * @return The [PlanetRemoteKeys] associated with the last item in the list.
      */
 
     private suspend fun getRemoteKeyForLastItem(
-        state: PagingState<Int, Character>
-    ): CharacterRemoteKeys? {
+        state: PagingState<Int, Starships>
+    ): StarshipsRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { character ->
-                characterRemoteKeysDao.getRemoteKeys(name = character.name)
+            ?.let { planet ->
+                starshipsRemoteKeysDao.getRemoteKeys(name = planet.name)
             }
     }
 }

@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:context=".ui.starships.StarShipsFragment">
+
+<androidx.appcompat.widget.AppCompatImageView
+    android:id="@+id/imageView"
+    android:layout_width="0dp"
+    android:layout_height="90dp"
+    android:src="@drawable/ic_star_wars"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+<androidx.appcompat.widget.SearchView
+    android:id="@+id/searchView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.starships.StarShipsFragment">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:iconifiedByDefault="false"
+    android:padding="4dp"
+    app:searchIcon="@drawable/ic_search"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    android:background="@drawable/searchbar_background"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/imageView"
+    android:queryHint="Search Programming language" />
 
-</FrameLayout>
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/starshipRecyclerview"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/searchView"
+    tools:listitem="@layout/starship_row" />
+
+<ProgressBar
+    android:id="@+id/starshipProgressBar"
+    style="?android:attr/progressBarStyle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:indeterminateTint="@color/white"
+    android:indeterminateTintMode="src_in"
+    app:layout_constraintBottom_toBottomOf="@+id/starshipRecyclerview"
+    app:layout_constraintEnd_toEndOf="@+id/starshipRecyclerview"
+    app:layout_constraintStart_toStartOf="@+id/starshipRecyclerview"
+    app:layout_constraintTop_toTopOf="@+id/starshipRecyclerview" />
+
+<com.google.android.material.textview.MaterialTextView
+    android:id="@+id/textViewError"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAlignment="center"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    android:textColor="@color/yellow"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="@+id/starshipRecyclerview"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/starshipRecyclerview"
+    app:layout_constraintVertical_bias="0.50" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

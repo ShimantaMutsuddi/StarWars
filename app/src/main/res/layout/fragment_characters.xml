@@ -80,6 +80,7 @@ tools:context=".ui.characters.CharactersFragment">
     android:layout_height="wrap_content"
     android:indeterminateTint="@color/white"
     android:indeterminateTintMode="src_in"
+    android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="@+id/charactersRecyclerview"
     app:layout_constraintEnd_toEndOf="@+id/charactersRecyclerview"
     app:layout_constraintStart_toStartOf="@+id/charactersRecyclerview"

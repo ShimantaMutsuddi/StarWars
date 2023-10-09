@@ -5,6 +5,7 @@ import com.mutsuddi_s.starwars.data.model.people.FilmResponse
 import com.mutsuddi_s.starwars.data.model.people.HomeWorldResponse
 import com.mutsuddi_s.starwars.data.model.people.SpeciesResponse
 import com.mutsuddi_s.starwars.data.model.planets.PlanetList
+import com.mutsuddi_s.starwars.data.model.starships.StarshipList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -26,6 +27,9 @@ interface ApiInterface {
 
     @GET("planets/?page/")
     suspend fun getPlanets(@Query("page") page: Int): Response<PlanetList>
+
+    @GET("starships/?page/")
+    suspend fun getStarships(@Query("page") page: Int): Response<StarshipList>
 
 
 }

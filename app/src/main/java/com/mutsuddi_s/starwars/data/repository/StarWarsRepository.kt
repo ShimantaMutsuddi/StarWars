@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.mutsuddi_s.starwars.data.datasources.CharacterRemoteMediator
 import com.mutsuddi_s.starwars.data.datasources.PlanetRemoteMediator
+import com.mutsuddi_s.starwars.data.datasources.StarshipRemoteMediator
 import com.mutsuddi_s.starwars.data.local.AppDatabase
 import com.mutsuddi_s.starwars.data.model.people.FilmResponse
 import com.mutsuddi_s.starwars.data.model.people.SpeciesResponse
@@ -83,6 +84,13 @@ class StarWarsRepository @Inject constructor(
         config = PagingConfig(pageSize = 10, maxSize = 100),
         remoteMediator = PlanetRemoteMediator(apiService, appDatabase),
         pagingSourceFactory = { appDatabase.planetDao().getPlanetsByName(searchString) }
+
+    ).liveData
+
+    fun getStarships(searchString: String) = Pager(
+        config = PagingConfig(pageSize = 10, maxSize = 100),
+        remoteMediator = StarshipRemoteMediator(apiService, appDatabase),
+        pagingSourceFactory = { appDatabase.starshipsDao().getStarshipsByName(searchString) }
 
     ).liveData
 }
