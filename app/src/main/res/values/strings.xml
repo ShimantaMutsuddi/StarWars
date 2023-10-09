@@ -16,4 +16,9 @@
     <string name="skin_color">SKIN COLOR</string>
     <string name="mass">MASS</string>
     <string name="gender">GENDER</string>
+    <string name="population">POPULATION</string>
+    <string name="climate">CLIMATE</string>
+    <string name="rotation_period">ROTATION PERIOD</string>
+    <string name="diameter">DIAMETER</string>
+    <string name="orbital_period">ORBITAL PERIOD</string>
 </resources>

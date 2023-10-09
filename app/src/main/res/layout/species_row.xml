@@ -19,16 +19,17 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewName"
-            android:layout_width="105dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/name"
+            android:textSize="12sp"
             android:textColor="@color/light_gray"
             app:layout_constraintEnd_toStartOf="@+id/textViewClassification"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="18dp" />
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewNameValue"
@@ -46,15 +47,17 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewClassification"
-            android:layout_width="106dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/classification"
+            android:textSize="12sp"
             android:textColor="@color/light_gray"
             app:layout_constraintEnd_toStartOf="@+id/textViewDesignation"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textViewName"
-            tools:layout_editor_absoluteY="18dp" />
+
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewClassificationValue"
@@ -72,15 +75,17 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewDesignation"
-            android:layout_width="105dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/designation"
+            android:textSize="12sp"
             android:textColor="@color/light_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textViewClassification"
-            tools:layout_editor_absoluteY="18dp" />
+
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewDesignationValue"

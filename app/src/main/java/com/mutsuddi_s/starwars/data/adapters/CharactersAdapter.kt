@@ -18,8 +18,9 @@ class CharactersAdapter(private val listener: OnItemClickListener) :
     inner class MyViewHolder(private val binding: CharactersRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(character: Character?) {
-            binding.nameTextView.text = character?.name
-            binding.dobTextView.text = character?.birth_year
+            binding.textViewNameValue.text = character?.name
+            binding.textViewBirthYearValue.text = character?.birth_year
+            binding.textViewGenderValue.text = character?.gender
 
             binding.root.setOnClickListener {
                 // Invoke the callback method with the clicked item
