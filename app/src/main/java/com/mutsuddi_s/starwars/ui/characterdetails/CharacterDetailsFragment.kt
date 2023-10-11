@@ -25,10 +25,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class CharacterDetailsFragment : Fragment() {
 
 
+    // View binding for the fragment layout
     private var _binding: FragmentCharacterDetailsBinding? = null
     private val binding get() = _binding!!
+
+    // ViewModel for handling character details
     private val viewModel: CharacterDetailsViewModel by viewModels()
+
+    // Arguments passed to this fragment, including the character to display
     private val args: CharacterDetailsFragmentArgs by navArgs()
+
+    // Adapters for displaying films and species information
     private val filmsAdapter: FilmsAdapter by lazy {
         FilmsAdapter()
     }
@@ -47,10 +54,16 @@ class CharacterDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Display character details
         args.character?.let { bindCharacter(it) }
 
     }
 
+    /**
+     * Binds the provided character's information to the UI elements.
+     *
+     * @param character The character whose details are to be displayed.
+     */
     private fun bindCharacter(character: Character) {
         binding.textViewFullNameValue.text = character.name
         binding.textViewSkinColorValue.text = character.skin_color
@@ -61,19 +74,22 @@ class CharacterDetailsFragment : Fragment() {
         binding.textViewGenderValue.text = character.gender
         binding.textViewBirthYearValue.text = character.birth_year
 
+        // Fetch and display the character's homeworld
         character.homeworld?.let { viewModel.fetchHomeWorld(it) }
+
+        // Fetch and display the films
         character.films?.let {
             binding.filmsLayout.isVisible=true
             viewModel.fetchFilms(it)
         }
 
+        // Fetch and display the species
         character.species?.let {
             binding.speciesLayout.isVisible=true
             viewModel.fetchSpecies(it)
         }
 
-
-
+        // Observe and handle updates in the UI for homeworld information
         viewModel.homeWorldLiveData.observe(viewLifecycleOwner){ event ->
             when (event) {
                 is Resource.Success -> {
@@ -92,6 +108,7 @@ class CharacterDetailsFragment : Fragment() {
             }
         }
 
+        // Observe and handle updates in the UI for films information
         viewModel.films.observe(viewLifecycleOwner){ event ->
             when (event) {
                 is Resource.Success -> {
@@ -110,6 +127,8 @@ class CharacterDetailsFragment : Fragment() {
                 else -> Unit
             }
         }
+
+        // Observe and handle updates in the UI for species information
         viewModel.species.observe(viewLifecycleOwner){ event ->
             when (event) {
                 is Resource.Success -> {

@@ -29,10 +29,17 @@ import kotlinx.coroutines.launch
 @ExperimentalPagingApi
 @AndroidEntryPoint
 class StarShipsFragment : Fragment() {
+    // ViewBinding for this fragment
     private var _binding: FragmentStarShipsBinding? = null
     private val binding get() = _binding!!
+
+    // ViewModel for fetching starship data
     private val viewModel: StarshipViewModel by viewModels()
+
+    // Adapter for displaying the list of starships
     private lateinit var starshipAdapter: StarshipAdapter
+
+    // Coroutine job for handling search
     private var searchJob: Job? = null
 
     override fun onCreateView(
@@ -46,9 +53,16 @@ class StarShipsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Initialize the starshipAdapter for displaying starship data
         starshipAdapter = StarshipAdapter()
+
+        // Set up the RecyclerView and load initial data
         setupRecyclerView()
+
+        // Set up the search functionality
         setupObservers("")
+
+        // Handle search input and start search coroutine
         binding.searchView.onQueryTextChanged {query->
 
             searchJob?.cancel()
@@ -72,6 +86,12 @@ class StarShipsFragment : Fragment() {
         _binding = null
     }
 
+    /**
+     * Sets up observers for starship data and updates the RecyclerView accordingly.
+     *
+     * @param searchString The search string used to filter starship data.
+     */
+
     private fun setupObservers(searchString: String) {
         lifecycleScope.launch {
             viewModel.getPlanets(searchString).observe(viewLifecycleOwner) {
@@ -80,6 +100,10 @@ class StarShipsFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * Sets up the RecyclerView with the starshipAdapter and its LoadStateListener.
+     */
 
     private fun setupRecyclerView() {
 

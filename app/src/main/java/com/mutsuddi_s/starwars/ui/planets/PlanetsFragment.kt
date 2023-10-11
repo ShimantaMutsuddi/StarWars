@@ -24,10 +24,17 @@ import kotlinx.coroutines.launch
 @ExperimentalPagingApi
 @AndroidEntryPoint
 class PlanetsFragment : Fragment() {
+    // ViewBinding for this fragment
     private var _binding: FragmentPlanetsBinding? = null
     private val binding get() = _binding!!
+
+    // ViewModel for fetching planet data
     private val viewModel: PlanetViewModel by viewModels()
+
+    // Adapter for displaying the list of planets
     private lateinit var planetAdapter: PlanetsAdapter
+
+    // Coroutine job for handling search
     private var searchJob: Job? = null
 
     override fun onCreateView(
@@ -40,13 +47,18 @@ class PlanetsFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Initialize the planetsAdapter for displaying planet data
         planetAdapter = PlanetsAdapter()
+
+        // Set up the RecyclerView and load initial data
         setupRecyclerView()
+
+        // Set up the search functionality
         setupObservers("")
-        binding.searchView.onQueryTextChanged {query->
 
+        // Handle search input and start search coroutine
+        binding.searchView.onQueryTextChanged { query ->
             searchJob?.cancel()
-
 
             searchJob = lifecycleScope.launch {
                 delay(300)
@@ -66,6 +78,11 @@ class PlanetsFragment : Fragment() {
         _binding = null
     }
 
+    /**
+     * Sets up observers for planet data and updates the RecyclerView accordingly.
+     *
+     * @param searchString The search string used to filter planet data.
+     */
     private fun setupObservers(searchString: String) {
         lifecycleScope.launch {
             viewModel.getPlanets(searchString).observe(viewLifecycleOwner) {
@@ -75,6 +92,9 @@ class PlanetsFragment : Fragment() {
         }
     }
 
+    /**
+     * Sets up the RecyclerView with the planetsAdapter and its LoadStateListener.
+     */
     private fun setupRecyclerView() {
 
 

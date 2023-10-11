@@ -1,22 +1,11 @@
 package com.mutsuddi_s.starwars.ui.characters
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.ListUpdateCallback
-import com.mutsuddi_s.starwars.data.adapters.CharactersAdapter
-import com.mutsuddi_s.starwars.data.model.people.Character
 import com.mutsuddi_s.starwars.data.repository.StarWarsRepository
-import com.mutsuddi_s.starwars.ui.characterdetails.util.CharacterPagingSource
-import com.mutsuddi_s.starwars.ui.characterdetails.util.DataDummy
-import com.mutsuddi_s.starwars.ui.characterdetails.util.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -27,8 +16,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 @OptIn(ExperimentalPagingApi::class)
