@@ -20,15 +20,7 @@ class StarWarsRepository @Inject constructor(
     private val appDatabase: AppDatabase
 ):SafeApiCall()  {
 
-   /* fun getCharacters(searchString: String) = Pager(
-        config = PagingConfig(
-            pageSize = NETWORK_PAGE_SIZE,
-            enablePlaceholders = false
-        ),
-        pagingSourceFactory = {
-            CharactersPagingSource(apiService, searchString)
-        }
-    ).liveData*/
+
     /**
      * Retrieves a LiveData stream of Star Wars character data with paging support.
      *
@@ -43,11 +35,23 @@ class StarWarsRepository @Inject constructor(
 
     ).liveData
 
+    /**
+     * Retrieves the homeworld data for a Star Wars character using its URL.
+     *
+     * @param url The URL of the character's homeworld.
+     * @return A Resource object representing the result of the operation.
+     */
 
      suspend fun getHomeWorld(url: String) = safeApiCall {
         apiService.getHomeWorld(url)
     }
 
+    /**
+     * Retrieves the list of films associated with a character using a list of film URLs.
+     *
+     * @param urls The list of film URLs.
+     * @return A Resource object representing the result of the operation.
+     */
     suspend fun getFilms(urls: List<String>): Resource<List<FilmResponse>> {
 
         try {
@@ -63,6 +67,13 @@ class StarWarsRepository @Inject constructor(
             return Resource.Error(e.localizedMessage)
         }
     }
+
+    /**
+     * Retrieves the list of species associated with a character using a list of species URLs.
+     *
+     * @param urls The list of species URLs.
+     * @return A Resource object representing the result of the operation.
+     */
     suspend fun getSpecies(urls: List<String>): Resource<List<SpeciesResponse>> {
 
         try {
@@ -79,6 +90,12 @@ class StarWarsRepository @Inject constructor(
         }
     }
 
+    /**
+     * Retrieves a LiveData stream of Star Wars planet data with paging support.
+     *
+     * @param searchString The search string to filter planets by name.
+     * @return A LiveData stream of paged Star Wars planet data.
+     */
 
     fun getPlanets(searchString: String) = Pager(
         config = PagingConfig(pageSize = 10, maxSize = 100),
@@ -86,6 +103,13 @@ class StarWarsRepository @Inject constructor(
         pagingSourceFactory = { appDatabase.planetDao().getPlanetsByName(searchString) }
 
     ).liveData
+
+    /**
+     * Retrieves a LiveData stream of Star Wars starship data with paging support.
+     *
+     * @param searchString The search string to filter starships by name.
+     * @return A LiveData stream of paged Star Wars starship data.
+     */
 
     fun getStarships(searchString: String) = Pager(
         config = PagingConfig(pageSize = 10, maxSize = 100),

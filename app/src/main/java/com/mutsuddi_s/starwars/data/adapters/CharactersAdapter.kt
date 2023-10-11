@@ -49,7 +49,7 @@ class CharactersAdapter(private val listener: OnItemClickListener) :
     }
 
     companion object {
-        private val CHARACTER_COMPARATOR = object : DiffUtil.ItemCallback<Character>() {
+         val CHARACTER_COMPARATOR = object : DiffUtil.ItemCallback<Character>() {
             override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
                 return oldItem.name == newItem.name
             }

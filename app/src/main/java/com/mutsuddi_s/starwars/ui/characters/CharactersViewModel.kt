@@ -22,9 +22,8 @@ import javax.inject.Inject
 @ExperimentalPagingApi
 @HiltViewModel
 class CharactersViewModel
-@Inject constructor(private val charactersRepository: StarWarsRepository) :
+@Inject constructor(private val repository: StarWarsRepository) :
     ViewModel() {
-
 
 
     /**
@@ -33,9 +32,10 @@ class CharactersViewModel
      * @param searchString The search string used to filter characters by name.
      * @return A LiveData stream of paged Star Wars character data.
      */
-    fun getCharacters(searchString: String): LiveData<PagingData<Character>> {
-        // Use the [StarWarsRepository] to fetch and cache character data in the ViewModel's scope.
-        return charactersRepository.getCharacters(searchString).cachedIn(viewModelScope)
-    }
+
+    // Use the [StarWarsRepository] to fetch and cache character data in the ViewModel's scope.
+    fun getCharacters(searchString: String): LiveData<PagingData<Character>> =
+        repository.getCharacters(searchString).cachedIn(viewModelScope)
+
 
 }

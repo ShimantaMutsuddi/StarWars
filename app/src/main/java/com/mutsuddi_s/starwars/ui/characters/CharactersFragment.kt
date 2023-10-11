@@ -21,16 +21,27 @@ import com.mutsuddi_s.starwars.utils.hideKeyboard
 import com.mutsuddi_s.starwars.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
 @AndroidEntryPoint
 class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
 
+    // View binding for the fragment layout
     private var _binding: FragmentCharactersBinding? = null
     private val binding get() = _binding!!
+
+    // View model for character data
     private val viewModel: CharactersViewModel by viewModels()
+
+    // Adapter for displaying characters
     private lateinit var charactersAdapter: CharactersAdapter
+
+    // Job for handling character search
+    private var searchJob: Job? = null
+
 
 
     override fun onCreateView(
@@ -44,13 +55,23 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Initialize the characters adapter and set up the RecyclerView
         charactersAdapter = CharactersAdapter(this)
         setupRecyclerView()
+
+        // Initialize the character data observation with an empty search string
         setupObservers("")
-        binding.searchView.onQueryTextChanged {
-            setupObservers(it)
-           // binding.charactersProgressBar.isVisible = true
-            hideKeyboard()
+
+        // Handle character search with a delay
+        binding.searchView.onQueryTextChanged { query ->
+            searchJob?.cancel()
+
+            searchJob = lifecycleScope.launch {
+                delay(300)
+                setupObservers(query)
+                binding.charactersProgressBar.isVisible = true
+                hideKeyboard()
+            }
         }
 
 
@@ -63,14 +84,24 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
         _binding = null
     }
 
+    /**
+     * Set up observers for character data.
+     * @param searchString The search string to filter characters.
+     */
+
     private fun setupObservers(searchString: String) {
         lifecycleScope.launch {
             viewModel.getCharacters(searchString).observe(viewLifecycleOwner) {
                 charactersAdapter.submitData(lifecycle, it)
-                //it?.let { binding.charactersProgressBar.isVisible=false }
+                it?.let { binding.charactersProgressBar.isVisible=false }
+
             }
         }
     }
+
+    /**
+     * Set up the RecyclerView with the characters adapter.
+     */
 
     private fun setupRecyclerView() {
 
@@ -78,8 +109,7 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
         binding.charactersRecyclerview.apply {
             adapter = charactersAdapter
             setHasFixedSize(true)
-            adapter=charactersAdapter.withLoadStateHeaderAndFooter(
-                header = LoaderAdapter(),
+            adapter=charactersAdapter.withLoadStateFooter(
                 footer = LoaderAdapter(),
             )
 
@@ -88,10 +118,11 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
 
 
 
+        // Add a listener to handle load state changes and errors
         charactersAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
                 binding.charactersProgressBar.isVisible = charactersAdapter.snapshot().isEmpty()
-                //binding.textViewError.isVisible = false
+
 
             } else {
 
@@ -104,8 +135,6 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
                 }
                 error?.let {
                     if (charactersAdapter.snapshot().isEmpty()) {
-                     //   binding.textViewError.isVisible = true
-                      //  binding.textViewError.text = it.error.message
                         binding.charactersProgressBar.isVisible=false
                         val snack = Snackbar.make(binding.root, it.error.message.toString(),Snackbar.LENGTH_LONG)
                         snack.show()
@@ -117,6 +146,11 @@ class CharactersFragment : Fragment(),CharactersAdapter.OnItemClickListener{
 
 
     }
+
+    /**
+     * Handles item click event for characters, navigating to the character details screen.
+     * @param character The selected character.
+     */
 
     override fun onItemClick(character: Character) {
         val action=CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailsFragment(character)
