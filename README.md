@@ -77,13 +77,14 @@ app
 - [Dagger-Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - for dependency injection.
 - JetPack
   - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - For reactive style programming (from VM to UI). 
-  - [Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle) - Used get lifecyle event of an activity or fragment and performs some action in response to change
+  - [Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle) - Used get lifecycle event of an activity or fragment and performs some action in response to change
   - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data that isn't destroyed on UI changes. 
   - [Room](https://developer.android.com/topic/libraries/architecture/room) - Used to create room db and store the data.
   - [Navigation](https://developer.android.com/guide/navigation/navigation-getting-started) - Used to navigate between fragments
   - [View Binding](https://developer.android.com/topic/libraries/view-binding) - Makes it easier to write code that interacts with views.
 - [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
 - [Retrofit](https://github.com/square/retrofit) - Used for REST api communication.
+- [Mockito-Kotlin](https://github.com/mockito/mockito-kotlin) - Mockito is a mocking framework.
 
   ## Testing
 
