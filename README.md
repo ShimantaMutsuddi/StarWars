@@ -28,7 +28,7 @@ The StarWars - App was created using Kotlin, clean architecture, networking, loc
     <td><img src="app/screenshots/starships.jpeg" width=300 ></td>
   </tr>
  </table>
- <br> If you appreciate what you see, please star⭐ the repository.
+
 
 
 ## Code Flow:
