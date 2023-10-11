@@ -32,6 +32,7 @@ The StarWars - App was created using Kotlin, clean architecture, networking, loc
 app
 │
 ├── data
+│   ├──adapter // Adapters for RecyclerViews
 │   ├── local
 │   │   ├── dao         // Room database DAOs
 │   │   └── database    // Room database setup
@@ -39,7 +40,7 @@ app
 │   ├── remote
 │   │   ├── api         // Retrofit API interfaces
 │   │
-│   ├── paging          // Paging3 for pagination
+│   ├── datasources          // Paging3 with remote mediator for pagination
 │   │
 │   ├── model           // Network model and entities
 │   │
@@ -55,7 +56,6 @@ app
 │   │   ├── feature1
 │   │   │   ├── view    // Fragments
 │   │   │   ├── viewmodel   // ViewModels
-│   │   │   ├── adapter // Adapters for RecyclerViews
 │   │   │
 │   │   ├── feature2
 │
@@ -87,5 +87,4 @@ app
 - [X] Starship List and Planet List Screens
 - [X] Offline Support
 - [X] Error Handling
-- [ ] Unit Tests
-- [X] Unit Tests
+- [X] Unit Tests (Not finished yet)
