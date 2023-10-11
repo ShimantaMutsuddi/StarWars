@@ -3,6 +3,10 @@
 
 The StarWars - App was created using Kotlin, clean architecture, networking, local caching, threading, jetpack components, and lifecycle-aware components. 
 
+## Build and Run
+- Clone the Repository.
+- Build and Run the Project.
+
 **App features:**
 - List of  characters
 - Detail of characters
@@ -80,6 +84,10 @@ app
   - [View Binding](https://developer.android.com/topic/libraries/view-binding) - Makes it easier to write code that interacts with views.
 - [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
 - [Retrofit](https://github.com/square/retrofit) - Used for REST api communication.
+
+  ## Testing
+
+- Character Details ViewModel
 
 ## TODO
 - [X] Character List Screen
